@@ -98,12 +98,15 @@ h1 {
   height: calc(100vh - 280px);
 }
 
+form {
+  margin-top: 32px;
+}
+
 form input {
   border-top-left-radius: var(--radius);
   border-bottom-left-radius: var(--radius);
   padding: 16px 20px;
   border: none;
-  margin-top: 32px;
   min-width: 400px;
 }
 
@@ -119,4 +122,53 @@ form button {
   background: #000;
   color: #fff;
   cursor: pointer;
+}
+
+@media screen and (max-width: 770px) {
+  form {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  header {
+    padding: 32px 3%;
+    height: 300px;
+  }
+
+  form input {
+    min-width: 0;
+    flex: 1;
+  }
+
+  .content {
+    width: 94%;
+    flex-direction: column;
+    height: auto;
+    padding: 16px;
+    height: 244px;
+    bottom: -122px;
+    overflow: hidden;
+  }
+
+  .content div {
+    width: 100%;
+    border-left: none;
+    text-align: center;
+    padding-left: 0;
+    margin-bottom: 12px;
+  }
+
+  .content div:nth-last-child(1) {
+    margin-bottom: 0;
+  }
+
+  .content h2 {
+    margin-bottom: 4px;
+  }
+
+  .leaflet-container  {
+    height: calc(100vh - 300px);
+  }
 }
