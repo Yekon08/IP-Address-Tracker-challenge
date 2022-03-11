@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { MapContainer, Marker, TileLayer } from "react-leaflet";
 import "./main.css";
 
 import HeaderBg from "./images/pattern-bg.png";
 import Form from "./components/Form";
+import Map from "./components/Map";
+import IpValue from "./components/IpValue";
 
 interface DataIp {
   ip: string;
@@ -21,6 +22,8 @@ interface DataIp {
 function App() {
   const [data, setData] = useState<DataIp>();
   const [personalIp, setPersonalIp] = useState("");
+  const [ipAddress, setIpAddress] = useState("");
+  const [map, setMap] = useState<any>();
 
   const handlePersonalIp = () => {
     const url = "https://api.ipify.org?format=json";
@@ -45,50 +48,37 @@ function App() {
     handleIpData(personalIp);
   }, []);
 
-  console.log("data: ", data);
-
   return (
     <>
       <header style={{ backgroundImage: `url(${HeaderBg})` }}>
         <h1>IP Adress Tracker</h1>
-        <Form />
         {data && (
-          <div className="content">
-            <div>
-              <h2>ip address</h2>
-              <p>{data.ip}</p>
-            </div>
-            <div>
-              <h2>Location</h2>
-              <p>
-                {data.location.city}, {data.location.country}{" "}
-                {data.location.postalCode}
-              </p>
-            </div>
-            <div>
-              <h2>Timezone</h2> <p>UTC {data.location.timezone}</p>
-            </div>
-            <div>
-              <h2>isp</h2>
-              <p>{data.isp}</p>
-            </div>
-          </div>
+          <Form
+            ip={ipAddress}
+            setIp={setIpAddress}
+            handleIpDate={handleIpData}
+          />
+        )}
+        {data && (
+          <IpValue
+            ip={data.ip}
+            city={data.location.city}
+            country={data.location.country}
+            postalCode={data.location.postalCode}
+            timezone={data.location.timezone}
+            isp={data.isp}
+          />
         )}
       </header>
       <main>
         <div className="map">
           {data && (
-            <MapContainer
-              center={[data.location.lat, data.location.lng]}
-              zoom={13}
-              zoomControl={false}
-            >
-              <TileLayer
-                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-              />
-              <Marker position={[data.location.lat, data.location.lng]} />
-            </MapContainer>
+            <Map
+              lat={data.location.lat}
+              lng={data.location.lng}
+              setMap={setMap}
+              map={map}
+            />
           )}
         </div>
       </main>
