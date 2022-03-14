@@ -46,7 +46,7 @@ function App() {
   useEffect(() => {
     handlePersonalIp();
     handleIpData(personalIp);
-  }, []);
+  }, [personalIp]);
 
   return (
     <>
